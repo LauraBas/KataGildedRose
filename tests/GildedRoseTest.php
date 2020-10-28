@@ -50,12 +50,28 @@ class GildedRoseTest extends TestCase
 
 		$this->assertEquals(50, $someItem->quality);
 	}
-	public function test_backstage_Passes_increase_3_times_quality_when_sellin_is_10_to_5()
+	public function test_backstage_Passes_increase_3_quality_when_sellin_is_10_to_5()
 	{
 		$someItem = new Item("Backstage passes to a TAFKAL80ETC concert", 8, 2);
 
 		GildedRose::updateQuality([$someItem]);
 
 		$this->assertEquals(4, $someItem->quality);
+	}
+	public function test_backstage_Passes_increase_2_quality_when_sellin_is_5_to_0()
+	{
+		$someItem = new Item("Backstage passes to a TAFKAL80ETC concert", 2, 2);
+
+		GildedRose::updateQuality([$someItem]);
+
+		$this->assertEquals(5, $someItem->quality);
+	}
+	public function test_backstage_Passes_quality_is_0_when_sellin_is_0()
+	{
+		$someItem = new Item("Backstage passes to a TAFKAL80ETC concert", 0, 2);
+
+		GildedRose::updateQuality([$someItem]);
+
+		$this->assertEquals(0, $someItem->quality);
 	}
 }
