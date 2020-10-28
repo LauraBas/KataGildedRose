@@ -6,52 +6,108 @@ namespace App;
 
 class GildedRose
 {
+    const BRIE = "Aged Brie";
+    const BACKSTAGE = "Backstage passes to a TAFKAL80ETC concert";
+    const SULFURAS = "Sulfuras, Hand of Ragnaros";
+    
+    public static function isLessThanMoreQuality($item) :bool
+    {
+        return $item->getQuality() < 50;
+    }
+    public static function isMoreThanLessQuality($item) :bool
+    {
+        return $item->getQuality() > 0;
+    }
+    public static function isRegularProduct($name) :bool
+    {
+        return (self::BRIE != $name) && (self::BACKSTAGE != $name);
+    }
+    public static function isSulfuras($name) :bool
+    {
+        return self::SULFURAS == $name;
+    }
+    public static function isBrie($name) :bool
+    {
+        return self::BRIE == $name;
+    }
+    public static function isBackstage($name) :bool
+    {
+        return self::BACKSTAGE == $name;
+    }
+    public static function decreaseQualityOnePoint($item)
+    {
+        $item->setQuality($item->getQuality() - 1);
+    }
+
+    public static function increaseQualityOnePoint($item)
+    {
+        $item->setQuality($item->getQuality() + 1);
+    }
+    public static function isSellin0($item) :bool
+    {
+        return $item->getSellIn() < 0;
+    }
+    
+    public static function isSellinLessThan11($item) :bool
+    {
+        return $item->getSellIn() < 11;
+    }
+    public static function isSellinLessThan6($item) :bool
+    {
+        return $item->getSellIn() < 6;
+    }
+    public static function decreaseSellIn($item)
+    {
+        $item->setSellIn($item->getSellIn() - 1);
+    }
 
     public static function updateQuality($items)
     {
-        for ($i = 0; $i < count($items); $i++) {
-            if (("Aged Brie" != $items[$i]->getName()) && ("Backstage passes to a TAFKAL80ETC concert" != $items[$i]->getName())) {
-                if ($items[$i]->getQuality() > 0) {
-                    if ("Sulfuras, Hand of Ragnaros" != $items[$i]->getName()) {
-                        $items[$i]->setQuality($items[$i]->getQuality() - 1);
+        foreach($items as $item) {
+            $name = $item->getName();
+                         
+            if (self::isRegularProduct($name)) {
+                if (self::isMoreThanLessQuality($item)) {
+                    if (!self::isSulfuras($name)) {
+                        self::decreaseQualityOnePoint($item);
                     }
                 }
             } else {
-                if ($items[$i]->getQuality() < 50) {
-                    $items[$i]->setQuality($items[$i]->getQuality() + 1);
-                    if ("Backstage passes to a TAFKAL80ETC concert" == $items[$i]->getName()) {
-                        if ($items[$i]->getSellIn() < 11) {
-                            if ($items[$i]->getQuality() < 50) {
-                                $items[$i]->setQuality($items[$i]->getQuality() + 1);
+                if (self::isLessThanMoreQuality($item)) {
+                    self::increaseQualityOnePoint($item);
+                    if (self::isBackstage($name)) {
+                        if (self::isSellinLessThan11($item)) {
+                            if (self::isLessThanMoreQuality($item)) {
+                                self::increaseQualityOnePoint($item);
                             }
                         }
-                        if ($items[$i]->getSellIn() < 6) {
-                            if ($items[$i]->getQuality() < 50) {
-                                $items[$i]->setQuality($items[$i]->getQuality() + 1);
+                        if (self::isSellinLessThan6($item)) {
+                            if (self::isLessThanMoreQuality($item)) {
+                                self::increaseQualityOnePoint($item);
                             }
                         }
                     }
                 }
             }
 
-            if ("Sulfuras, Hand of Ragnaros" != $items[$i]->getName()) {
-                $items[$i]->setSellIn($items[$i]->getSellIn() - 1);
+            if (!self::isSulfuras($name)) {
+                self::decreaseSellIn($item);
             }
 
-            if ($items[$i]->getSellIn() < 0) {
-                if ("Aged Brie" != $items[$i]->getName()) {
-                    if ("Backstage passes to a TAFKAL80ETC concert" != $items[$i]->getName()) {
-                        if ($items[$i]->getQuality() > 0) {
-                            if ("Sulfuras, Hand of Ragnaros" != $items[$i]->getName()) {
-                                $items[$i]->setQuality($items[$i]->getQuality() - 1);
+            if (self::isSellin0($item)) {
+                if (!self::isBrie($name)) {
+                    if (!self::isBackstage($name)) {
+                        if (self::isMoreThanLessQuality($item)) {
+                            if (!self::isSulfuras($name)) {
+                                self::decreaseQualityOnePoint($item);
                             }
                         }
                     } else {
-                        $items[$i]->setQuality($items[$i]->getQuality() - $items[$i]->getQuality());
+                        $item->setQuality($item->getQuality() - $item->getQuality());
                     }
                 } else {
-                    if ($items[$i]->getQuality() < 50) {
-                        $items[$i]->setQuality($items[$i]->getQuality() + 1);
+                    if (self::isLessThanMoreQuality($item)) {
+                        self::increaseQualityOnePoint($item);
                     }
                 }
             }

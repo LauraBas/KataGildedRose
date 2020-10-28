@@ -74,4 +74,13 @@ class GildedRoseTest extends TestCase
 
 		$this->assertEquals(0, $someItem->quality);
 	}
+	public function test_sulfuras_quality_never_decrease()
+	{
+		$someItem = new Item("Sulfuras, Hand of Ragnaros", 1, 2);
+
+		GildedRose::updateQuality([$someItem]);
+
+		$this->assertEquals(2, $someItem->quality);
+	}
+	
 }
