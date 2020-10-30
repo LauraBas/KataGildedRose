@@ -9,12 +9,13 @@ class GildedRose
     const BRIE = "Aged Brie";
     const BACKSTAGE = "Backstage passes to a TAFKAL80ETC concert";
     const SULFURAS = "Sulfuras, Hand of Ragnaros";
+    const CONJURED = "Conjured";
     
-    public static function isLessThanMoreQuality($item) :bool
+    public static function isLessThanMaxQuality($item) :bool
     {
         return $item->getQuality() < 50;
     }
-    public static function isMoreThanLessQuality($item) :bool
+    public static function isMoreThanMinQuality($item) :bool
     {
         return $item->getQuality() > 0;
     }
@@ -34,18 +35,33 @@ class GildedRose
     {
         return self::BACKSTAGE == $name;
     }
-    public static function decreaseQualityOnePoint($item)
+    public static function isConjured($name) :bool
     {
-        $item->setQuality($item->getQuality() - 1);
+        return self::CONJURED == $name;
     }
-
-    public static function increaseQualityOnePoint($item)
+    public static function decreaseQualityOnePoint($item) :void
     {
-        $item->setQuality($item->getQuality() + 1);
+        if(self::isMoreThanMinQuality($item))
+        {
+            $item->setQuality($item->getQuality() - 1);
+        }
+    }
+    
+    public static function increaseQualityOnePoint($item) :void
+    {
+        if (self::isLessThanMaxQuality($item))
+        {
+            $item->setQuality($item->getQuality() + 1);
+
+        }
+    }
+    public static function isSellinLessThan0($item) :bool
+    {
+        return $item->getSellIn() < 0;
     }
     public static function isSellin0($item) :bool
     {
-        return $item->getSellIn() < 0;
+        return $item->getSellIn() == 0;
     }
     
     public static function isSellinLessThan11($item) :bool
@@ -56,61 +72,66 @@ class GildedRose
     {
         return $item->getSellIn() < 6;
     }
-    public static function decreaseSellIn($item)
+    public static function decreaseSellIn($item) :void
     {
-        $item->setSellIn($item->getSellIn() - 1);
+        if (!self::isSulfuras($item->name)) {
+            $item->setSellIn($item->getSellIn() - 1);
+
+        }
     }
 
-    public static function updateQuality($items)
+    public static function canDecreaseQuality($item) :bool 
+    {
+        return self::isMoreThanMinQuality($item) && !self::isSulfuras($item->name);
+    }
+    
+
+    public static function updateQuality($items) :void 
     {
         foreach($items as $item) {
             $name = $item->getName();
-                         
-            if (self::isRegularProduct($name)) {
-                if (self::isMoreThanLessQuality($item)) {
-                    if (!self::isSulfuras($name)) {
+
+            if (self::isConjured($name)){
+                self::decreaseQualityOnePoint($item);
+                self::decreaseQualityOnePoint($item);
+            }                         
+            else if (self::isRegularProduct($name)) 
+            {
+                if(self::canDecreaseQuality($item))
+                {
+                    self::decreaseQualityOnePoint($item);
+                    if(self::isSellin0($item))
+                    {
                         self::decreaseQualityOnePoint($item);
                     }
                 }
-            } else {
-                if (self::isLessThanMoreQuality($item)) {
+            }
+            else if (self::isBackstage($name)) {
+                
+                self::increaseQualityOnePoint($item);
+                
+                if (self::isSellinLessThan11($item)) {
+                    
                     self::increaseQualityOnePoint($item);
-                    if (self::isBackstage($name)) {
-                        if (self::isSellinLessThan11($item)) {
-                            if (self::isLessThanMoreQuality($item)) {
-                                self::increaseQualityOnePoint($item);
-                            }
-                        }
-                        if (self::isSellinLessThan6($item)) {
-                            if (self::isLessThanMoreQuality($item)) {
-                                self::increaseQualityOnePoint($item);
-                            }
-                        }
-                    }
+                    
+                }
+                if (self::isSellinLessThan6($item)) {
+                    
+                    self::increaseQualityOnePoint($item);                    
+                }
+                if (self::isSellin0($item))
+                {
+                    
+                    $item->setQuality(0);                        
+                     
                 }
             }
-
-            if (!self::isSulfuras($name)) {
-                self::decreaseSellIn($item);
-            }
-
-            if (self::isSellin0($item)) {
-                if (!self::isBrie($name)) {
-                    if (!self::isBackstage($name)) {
-                        if (self::isMoreThanLessQuality($item)) {
-                            if (!self::isSulfuras($name)) {
-                                self::decreaseQualityOnePoint($item);
-                            }
-                        }
-                    } else {
-                        $item->setQuality($item->getQuality() - $item->getQuality());
-                    }
-                } else {
-                    if (self::isLessThanMoreQuality($item)) {
-                        self::increaseQualityOnePoint($item);
-                    }
-                }
-            }
+            else if (self::isBrie($name)) 
+            {
+                self::increaseQualityOnePoint($item);
+                
+            }                                                                                                        
+            self::decreaseSellin($item);            
         }
     }
 }
