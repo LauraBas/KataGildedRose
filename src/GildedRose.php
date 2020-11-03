@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Models\Conjured;
+use App\Models\Brie;
+
 class GildedRose
 {
     const BRIE = "Aged Brie";
@@ -84,16 +87,20 @@ class GildedRose
     {
         return self::isMoreThanMinQuality($item) && !self::isSulfuras($item->name);
     }
-    
+
 
     public static function updateQuality($items) :void 
     {
+
         foreach($items as $item) {
             $name = $item->getName();
+            $sellIn = $item->getSellIn();
+            $quality = $item->getQuality();
 
             if (self::isConjured($name)){
-                self::decreaseQualityOnePoint($item);
-                self::decreaseQualityOnePoint($item);
+                $conjured = new Conjured($name, $sellIn, $quality);
+                $item->quality = $conjured->Update();
+               
             }                         
             else if (self::isRegularProduct($name)) 
             {
@@ -128,10 +135,12 @@ class GildedRose
             }
             else if (self::isBrie($name)) 
             {
-                self::increaseQualityOnePoint($item);
+                $brie = new Brie($name, $sellIn, $quality);
+                $item->quality = $brie->Update();
                 
             }                                                                                                        
             self::decreaseSellin($item);            
         }
+
     }
 }

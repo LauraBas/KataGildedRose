@@ -5,6 +5,8 @@ namespace Tests;
 use PHPUnit\Framework\TestCase;
 use App\GildedRose;
 use App\Item;
+use App\Models\Conjured;
+use App\Models\Brie;
 
 class GildedRoseTest extends TestCase
 {
