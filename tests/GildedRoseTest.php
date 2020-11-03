@@ -8,6 +8,7 @@ use App\Item;
 use App\Models\Conjured;
 use App\Models\Brie;
 use App\Models\Backstage;
+use App\Models\RegularProduct;
 
 class GildedRoseTest extends TestCase
 {

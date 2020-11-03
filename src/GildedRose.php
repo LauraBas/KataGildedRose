@@ -7,6 +7,7 @@ namespace App;
 use App\Models\Conjured;
 use App\Models\Brie;
 use App\Models\Backstage;
+use App\Models\RegularProduct;
 
 class GildedRose
 {
@@ -107,34 +108,13 @@ class GildedRose
             {
                 if(self::canDecreaseQuality($item))
                 {
-                    self::decreaseQualityOnePoint($item);
-                    if(self::isSellin0($item))
-                    {
-                        self::decreaseQualityOnePoint($item);
-                    }
+                    $regularProduct = new RegularProduct($name, $sellIn, $quality);
+                    $item->quality = $regularProduct->Update();
                 }
             }
             else if (self::isBackstage($name)) {
                 $backstage = new Backstage($name, $sellIn, $quality);
                 $item->quality = $backstage->Update();
-                
-                // self::increaseQualityOnePoint($item);
-                
-                // if (self::isSellinLessThan11($item)) {
-                    
-                //     self::increaseQualityOnePoint($item);
-                    
-                // }
-                // if (self::isSellinLessThan6($item)) {
-                    
-                //     self::increaseQualityOnePoint($item);                    
-                // }
-                // if (self::isSellin0($item))
-                // {
-                    
-                //     $item->setQuality(0);                        
-                     
-                // }
 
             }
             else if (self::isBrie($name)) 

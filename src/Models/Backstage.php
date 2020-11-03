@@ -10,11 +10,11 @@ Class Backstage extends Item
         $this->increaseQuality();
         return $this->quality;
     }
-    public function canIncreaseQuality()
+    public function canIncreaseQuality() :bool
     {
         return $this->quality < 50;
     }
-    public function increaseQuality()
+    public function increaseQuality() :void
     {
         if ($this->canIncreaseQuality())
         {    
