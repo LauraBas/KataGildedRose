@@ -8,6 +8,7 @@ use App\Models\Conjured;
 use App\Models\Brie;
 use App\Models\Backstage;
 use App\Models\RegularProduct;
+use App\Models\Sulfuras;
 
 class GildedRose
 {
@@ -103,14 +104,18 @@ class GildedRose
                 $conjured = new Conjured($name, $sellIn, $quality);
                 $item->quality = $conjured->Update();
                
-            }                         
+            }  
+            else if (self::isSulfuras($name))
+            {
+                $sulfuras = new Sulfuras($name, $sellIn, $quality);
+                $item->quality = $sulfuras->Update();
+            }                       
             else if (self::isRegularProduct($name)) 
             {
-                if(self::canDecreaseQuality($item))
-                {
+                
                     $regularProduct = new RegularProduct($name, $sellIn, $quality);
                     $item->quality = $regularProduct->Update();
-                }
+                
             }
             else if (self::isBackstage($name)) {
                 $backstage = new Backstage($name, $sellIn, $quality);

@@ -9,6 +9,7 @@ use App\Models\Conjured;
 use App\Models\Brie;
 use App\Models\Backstage;
 use App\Models\RegularProduct;
+use App\Models\Sulfuras;
 
 class GildedRoseTest extends TestCase
 {
