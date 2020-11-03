@@ -15,12 +15,11 @@ Class Brie extends Item
     {
         return $this->quality < 50;
     } 
-    public function increaseQuality()
+    public function increaseQuality() :void
     {
         if ($this->canIncreaseQuality())
         {
-            $this->quality += 1;
-            
+            $this->quality += 1;            
         }    
     }
 }

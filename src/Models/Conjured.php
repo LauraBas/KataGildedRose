@@ -18,7 +18,7 @@ Class Conjured extends Item
     {
         return $this->quality > 0;
     } 
-    public function decreaseQuality()
+    public function decreaseQuality() :void
     {
         if ($this->canDecreaseQuality())
         {

@@ -7,6 +7,7 @@ use App\GildedRose;
 use App\Item;
 use App\Models\Conjured;
 use App\Models\Brie;
+use App\Models\Backstage;
 
 class GildedRoseTest extends TestCase
 {
