@@ -8,29 +8,63 @@ Class RegularProduct extends Item
     public function Update()
     {
         $this->decreaseQuality();
-        return $this->quality;
+        $this->decreaseSellin();
+        return $this->quality && $this->sellIn;
     }
-    public function canDecreaseQuality() :bool
-    {
-        return $this->quality > 0;
-    } 
 
-    public function decreaseQuality() :void
+    CONST MINQUALITY = 0;
+    CONST MAXQUALITY = 50;
+
+    public function isSellin0() :bool
     {
-        if ($this->canDecreaseQuality())
+        return $this->sellIn == 0;
+    }
+
+    public function isQualityLessThan0() :bool
+    {
+        return $this->quality < 0;
+    }
+
+    public function decreaseQuality() :void 
+    {
+        if ($this->isSellin0())
         {
-            if ($this->sellIn == 0)
-            {
-                $this->quality -= 2;
-            }
-            else
-            {
-                $this->quality -= 1;
-            }
-            if ($this->quality < 0)
+            $this->decreaseQualityTwoPoints();            
+        } 
+        else
+        {
+            $this->decreaseQualityOnePoint();
+        }
+    }
+
+    public function decreaseQualityOnePoint() :void
+    {
+        if ($this->isMoreThanMinQuality())
+        {            
+            $this->quality -= 1;
+            if ($this->isQualityLessThan0())
             {
                 $this->quality = 0;
             }
         }            
+    }
+
+    public function decreaseQualityTwoPoints() :void 
+    {
+        $this->decreaseQualityOnePoint();
+        $this->decreaseQualityOnePoint();
+    }
+
+    public function isLessThanMaxQuality() :bool 
+    {
+        return ($this->quality < $this::MAXQUALITY);
+    }
+    public function isMoreThanMinQuality() :bool
+    {
+        return ($this->quality > $this::MINQUALITY);
+    }
+    public function decreaseSellin() :void 
+    {
+        $this->sellIn -= 1;
     }
 }

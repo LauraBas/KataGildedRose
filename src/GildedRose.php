@@ -17,14 +17,14 @@ class GildedRose
     const SULFURAS = "Sulfuras, Hand of Ragnaros";
     const CONJURED = "Conjured";
     
-    public static function isLessThanMaxQuality($item) :bool
-    {
-        return $item->getQuality() < 50;
-    }
-    public static function isMoreThanMinQuality($item) :bool
-    {
-        return $item->getQuality() > 0;
-    }
+    // public static function isLessThanMaxQuality($item) :bool
+    // {
+    //     return $item->getQuality() < 50;
+    // }
+    // public static function isMoreThanMinQuality($item) :bool
+    // {
+    //     return $item->getQuality() > 0;
+    // }
     public static function isRegularProduct($name) :bool
     {
         return (self::BRIE != $name) && (self::BACKSTAGE != $name);
@@ -45,13 +45,13 @@ class GildedRose
     {
         return self::CONJURED == $name;
     }
-    public static function decreaseQualityOnePoint($item) :void
-    {
-        if(self::isMoreThanMinQuality($item))
-        {
-            $item->setQuality($item->getQuality() - 1);
-        }
-    }
+    // public static function decreaseQualityOnePoint($item) :void
+    // {
+    //     if(self::isMoreThanMinQuality($item))
+    //     {
+    //         $item->setQuality($item->getQuality() - 1);
+    //     }
+    // }
     
     public static function increaseQualityOnePoint($item) :void
     {
@@ -65,19 +65,19 @@ class GildedRose
     {
         return $item->getSellIn() < 0;
     }
-    public static function isSellin0($item) :bool
-    {
-        return $item->getSellIn() == 0;
-    }
+    // public static function isSellin0($item) :bool
+    // {
+    //     return $item->getSellIn() == 0;
+    // }
     
-    public static function isSellinLessThan11($item) :bool
-    {
-        return $item->getSellIn() < 11;
-    }
-    public static function isSellinLessThan6($item) :bool
-    {
-        return $item->getSellIn() < 6;
-    }
+    // public static function isSellinLessThan11($item) :bool
+    // {
+    //     return $item->getSellIn() < 11;
+    // }
+    // public static function isSellinLessThan6($item) :bool
+    // {
+    //     return $item->getSellIn() < 6;
+    // }
     public static function decreaseSellIn($item) :void
     {
         if (!self::isSulfuras($item->name)) {
