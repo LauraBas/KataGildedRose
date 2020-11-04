@@ -2,8 +2,9 @@
 
 namespace App\Models;
 use App\Item;
+use App\Models\RegularProduct;
 
-Class Brie extends Item 
+Class Brie extends RegularProduct
 {
     public function Update() 
     {
@@ -11,13 +12,10 @@ Class Brie extends Item
         
         return $this->quality; 
     } 
-    public function canIncreaseQuality() :bool
-    {
-        return $this->quality < 50;
-    } 
+    
     public function increaseQuality() :void
     {
-        if ($this->canIncreaseQuality())
+        if ($this->isLessThanMaxQuality())
         {
             $this->quality += 1;            
         }    
