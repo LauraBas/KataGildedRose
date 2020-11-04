@@ -9,8 +9,7 @@ Class Backstage extends RegularProduct
     public function Update()
     {
         $this->updateBackstageQuality();
-        $this->decreaseSellin();
-        return $this->quality && $this->sellIn;
+        return $this->quality;
     }
 
     public function isSellinLessThan11() :bool

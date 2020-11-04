@@ -17,17 +17,10 @@ class GildedRose
     const SULFURAS = "Sulfuras, Hand of Ragnaros";
     const CONJURED = "Conjured";
     
-    // public static function isLessThanMaxQuality($item) :bool
-    // {
-    //     return $item->getQuality() < 50;
-    // }
-    // public static function isMoreThanMinQuality($item) :bool
-    // {
-    //     return $item->getQuality() > 0;
-    // }
     public static function isRegularProduct($name) :bool
     {
-        return (self::BRIE != $name) && (self::BACKSTAGE != $name);
+        return (self::BRIE != $name) && (self::BACKSTAGE != $name) 
+                && (self::SULFURAS != $name) && (self::CONJURED != $name);
     }
     public static function isSulfuras($name) :bool
     {
@@ -45,52 +38,6 @@ class GildedRose
     {
         return self::CONJURED == $name;
     }
-    // public static function decreaseQualityOnePoint($item) :void
-    // {
-    //     if(self::isMoreThanMinQuality($item))
-    //     {
-    //         $item->setQuality($item->getQuality() - 1);
-    //     }
-    // }
-    
-    // public static function increaseQualityOnePoint($item) :void
-    // {
-    //     if (self::isLessThanMaxQuality($item))
-    //     {
-    //         $item->setQuality($item->getQuality() + 1);
-
-    //     }
-    // }
-    public static function isSellinLessThan0($item) :bool
-    {
-        return $item->getSellIn() < 0;
-    }
-    // public static function isSellin0($item) :bool
-    // {
-    //     return $item->getSellIn() == 0;
-    // }
-    
-    // public static function isSellinLessThan11($item) :bool
-    // {
-    //     return $item->getSellIn() < 11;
-    // }
-    // public static function isSellinLessThan6($item) :bool
-    // {
-    //     return $item->getSellIn() < 6;
-    // }
-    public static function decreaseSellIn($item) :void
-    {
-        if (!self::isSulfuras($item->name)) {
-            $item->setSellIn($item->getSellIn() - 1);
-
-        }
-    }
-
-    public static function canDecreaseQuality($item) :bool 
-    {
-        return self::isMoreThanMinQuality($item) && !self::isSulfuras($item->name);
-    }
-
 
     public static function updateQuality($items) :void 
     {
@@ -100,36 +47,39 @@ class GildedRose
             $sellIn = $item->getSellIn();
             $quality = $item->getQuality();
 
-            if (self::isConjured($name)){
+            if (self::isConjured($name))
+            {
                 $conjured = new Conjured($name, $sellIn, $quality);
                 $item->quality = $conjured->Update();
-               
+                $item->sellIn = $conjured->decreaseSellin();
+                return;                                               
             }  
-            else if (self::isSulfuras($name))
+            if (self::isSulfuras($name))
             {
                 $sulfuras = new Sulfuras($name, $sellIn, $quality);
-                $item->quality = $sulfuras->Update();
+                $item->quality = $sulfuras->Update(); 
+                return;               
             }                       
-            else if (self::isRegularProduct($name)) 
-            {
-                
-                    $regularProduct = new RegularProduct($name, $sellIn, $quality);
-                    $item->quality = $regularProduct->Update();
-                
+            if (self::isRegularProduct($name)) 
+            {                
+                $regularProduct = new RegularProduct($name, $sellIn, $quality);
+                $item->quality = $regularProduct->Update();
+                $item->sellIn = $regularProduct->decreaseSellin();   
+                return;                         
             }
-            else if (self::isBackstage($name)) {
+            if (self::isBackstage($name)) 
+            {
                 $backstage = new Backstage($name, $sellIn, $quality);
                 $item->quality = $backstage->Update();
-
+                $item->sellIn = $backstage->decreaseSellin();
+                return;
             }
-            else if (self::isBrie($name)) 
+            if (self::isBrie($name)) 
             {
                 $brie = new Brie($name, $sellIn, $quality);
                 $item->quality = $brie->Update();
-                
-            }                                                                                                        
-            self::decreaseSellin($item);            
+                $item->sellIn = $brie->decreaseSellin();                
+            }                                                                                                                   
         }
-
     }
 }

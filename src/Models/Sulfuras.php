@@ -8,6 +8,6 @@ Class Sulfuras extends RegularProduct
 {
     public function Update()
     {
-        return $this->quality && $this->sellIn;
+        return $this->quality;
     }
 }

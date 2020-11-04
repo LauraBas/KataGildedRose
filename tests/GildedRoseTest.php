@@ -16,7 +16,7 @@ class GildedRoseTest extends TestCase
 
 	public function test_Some_Item_Decrease_Quality_in_1_unit()
 	{
-		$someItem = new Item("Some Item", 2, 3);
+		$someItem = new Item("Tea", 2, 3);
 
 		GildedRose::updateQuality([$someItem]);
 
@@ -25,7 +25,7 @@ class GildedRoseTest extends TestCase
 
 	public function test_when_sellin__pass_quality_decrease_twice()
 	{
-		$someItem = new Item("Some Item", 0, 3);
+		$someItem = new Item("Coffee", 0, 3);
 
 		GildedRose::updateQuality([$someItem]);
 
@@ -33,7 +33,7 @@ class GildedRoseTest extends TestCase
 	}
 	public function test_quality_is_always_positive()
 	{
-		$someItem = new Item("Some Item", 0, 1);
+		$someItem = new Item("Puddin", 0, 1);
 
 		GildedRose::updateQuality([$someItem]);
 
@@ -97,7 +97,7 @@ class GildedRoseTest extends TestCase
 	}
 	public function test_someItem_sellIn_never_decrease()
 	{
-		$someItem = new Item("Some item", 1, 2);
+		$someItem = new Item("Wine", 1, 2);
 
 		GildedRose::updateQuality([$someItem]);
 

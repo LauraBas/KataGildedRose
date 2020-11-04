@@ -8,9 +8,8 @@ Class Brie extends RegularProduct
 {
     public function Update() 
     {
-        $this->increaseQuality();
-        
-        return $this->quality; 
+        $this->increaseQuality();               
+        return $this->quality;
     } 
     
     public function increaseQuality() :void
@@ -18,7 +17,7 @@ Class Brie extends RegularProduct
         if ($this->isLessThanMaxQuality())
         {
             $this->quality += 1;            
-        }    
+        } 
     }
 }
 

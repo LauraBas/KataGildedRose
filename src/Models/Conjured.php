@@ -8,11 +8,9 @@ use App\Models\RegularProduct;
 
 Class Conjured extends RegularProduct
 {
-     public function Update() 
+    public function Update() 
     {
-        $this->decreaseQualityTwoPoints();
-        
+        $this->decreaseQualityTwoPoints();        
         return $this->quality; 
-    } 
-    
+    }     
 }
