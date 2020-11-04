@@ -2,31 +2,17 @@
 
 namespace App\Models;
 use App\Item;
+use App\Models\RegularProduct;
 
 
 
-Class Conjured extends Item
+Class Conjured extends RegularProduct
 {
      public function Update() 
     {
-        $this->decreaseQuality();
+        $this->decreaseQualityTwoPoints();
         
         return $this->quality; 
     } 
     
-    public function canDecreaseQuality() :bool
-    {
-        return $this->quality > 0;
-    } 
-    public function decreaseQuality() :void
-    {
-        if ($this->canDecreaseQuality())
-        {
-            $this->quality -= 2;
-            if ($this->quality < 0)
-            {
-                $this->quality = 0;
-            }
-        }    
-    }
 }
