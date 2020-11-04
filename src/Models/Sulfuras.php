@@ -2,8 +2,9 @@
 
 namespace App\Models;
 use App\Item;
+use App\Models\RegularProduct;
 
-Class Sulfuras extends Item
+Class Sulfuras extends RegularProduct
 {
     public function Update()
     {

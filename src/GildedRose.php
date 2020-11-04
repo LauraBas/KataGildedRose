@@ -53,14 +53,14 @@ class GildedRose
     //     }
     // }
     
-    public static function increaseQualityOnePoint($item) :void
-    {
-        if (self::isLessThanMaxQuality($item))
-        {
-            $item->setQuality($item->getQuality() + 1);
+    // public static function increaseQualityOnePoint($item) :void
+    // {
+    //     if (self::isLessThanMaxQuality($item))
+    //     {
+    //         $item->setQuality($item->getQuality() + 1);
 
-        }
-    }
+    //     }
+    // }
     public static function isSellinLessThan0($item) :bool
     {
         return $item->getSellIn() < 0;
