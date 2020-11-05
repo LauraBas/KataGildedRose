@@ -2,12 +2,9 @@
 
 namespace App\Models;
 use App\Item;
-use App\Models\RegularProduct;
+use App\Models\Product;
 
-Class Sulfuras extends RegularProduct
+Class Sulfuras extends Product
 {
-    public function Update()
-    {
-        return $this->quality;
-    }
+    
 }

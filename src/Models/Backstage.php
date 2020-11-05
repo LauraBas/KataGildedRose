@@ -2,9 +2,9 @@
 
 namespace App\Models;
 use App\Item;
-use App\Models\RegularProduct;
+use App\Models\Product;
 
-Class Backstage extends RegularProduct
+Class Backstage extends Product implements iUpdate
 {
     public function Update()
     {
@@ -12,23 +12,7 @@ Class Backstage extends RegularProduct
         return $this->quality;
     }
 
-    public function isSellinLessThan11() :bool
-    {
-        return $this->sellIn < 11;
-    } 
 
-    public function isSellinLessThan6() :bool 
-    {
-        return $this->sellIn < 6;
-    }
-
-    public function increaseQualityOnePoint() :void 
-    {
-        if ($this->isLessThanMaxQuality())
-        {
-            $this->quality += 1;
-        }
-    }
 
     public function updateBackstageQuality() :void
     {
@@ -45,7 +29,7 @@ Class Backstage extends RegularProduct
         }
         if ($this->isSellin0())
         {
-            $this->quality = 0;
+            $this->quality = Product::MINQUALITY;
         }
         
     }

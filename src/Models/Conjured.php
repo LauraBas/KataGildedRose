@@ -2,11 +2,11 @@
 
 namespace App\Models;
 use App\Item;
-use App\Models\RegularProduct;
+use App\Models\Product;
 
 
 
-Class Conjured extends RegularProduct
+Class Conjured extends Product implements iUpdate
 {
     public function Update() 
     {

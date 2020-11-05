@@ -57,7 +57,8 @@ class GildedRose
             if (self::isSulfuras($name))
             {
                 $sulfuras = new Sulfuras($name, $sellIn, $quality);
-                $item->quality = $sulfuras->Update(); 
+                $item->quality = $sulfuras->getQuality(); 
+                $item->sellIn = $sulfuras->getSellIn();
                 return;               
             }                       
             if (self::isRegularProduct($name)) 
